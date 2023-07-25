@@ -1,5 +1,6 @@
 return {
     "hrsh7th/nvim-cmp",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",

@@ -1,14 +1,17 @@
 return {
     {
         "akinsho/bufferline.nvim",
+        event = "VeryLazy",
         config = true,
     },
     {
         "lukas-reineke/indent-blankline.nvim",
+        event = "VeryLazy",
         config = true,
     },
     {
         "lewis6991/gitsigns.nvim",
+        event = "VeryLazy",
         config = true,
     },
     {
@@ -19,6 +22,7 @@ return {
     },
     {
         "RRethy/vim-illuminate",
+        event = "VeryLazy",
         config = function()
             require('illuminate').configure()
         end

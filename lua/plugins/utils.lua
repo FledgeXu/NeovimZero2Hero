@@ -1,22 +1,23 @@
 return {
     {
         "rhysd/accelerated-jk",
-        config = function()
-            vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)")
-            vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)")
-        end,
+        keys = {
+            { "j", "<Plug>(accelerated_jk_gj)" },
+            { "k", "<Plug>(accelerated_jk_gk)" },
+        },
     },
     {
         "folke/persistence.nvim",
-        config = function()
-            require("persistence").setup()
-            vim.keymap.set("n","<leader>qs", [[<cmd>lua require("persistence").load()<cr>]])
-            vim.keymap.set("n","<leader>ql", [[<cmd>lua require("persistence").load({ last = true})<cr>]])
-            vim.keymap.set("n","<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]])
-        end
+        keys = {
+            { "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]] },
+            { "<leader>ql", [[<cmd>lua require("persistence").load({ last = true})<cr>]] },
+            { "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]] },
+        },
+        config = true,
     },
     {
         "windwp/nvim-autopairs",
+        event = "VeryLazy",
         opts = {
             enable_check_bracket_line = false,
         },
@@ -27,44 +28,60 @@ return {
     },
     {
         "folke/flash.nvim",
-        config = function()
-            require("flash").setup()
-            vim.keymap.set({"n","x","o"},"s",
+        keys = {
+            {
+                "s",
+                mode = { "n", "x", "o" },
                 function()
-                    require("flash").jump({
-                        search = {
-                            mode = function(str)
-                                return "\\<" .. str
-                            end,
-                        },
-                    })
-                end
-            )
-            vim.keymap.set({"n","x","o"},"S",
+                    require("flash").jump()
+                end,
+                desc = "Flash",
+            },
+            {
+                "S",
+                mode = { "n", "o", "x" },
                 function()
                     require("flash").treesitter()
-                end
-            )
-            vim.keymap.set({"o"},"r",
+                end,
+                desc = "Flash Treesitter",
+            },
+            {
+                "r",
+                mode = "o",
                 function()
                     require("flash").remote()
-                end
-            )
-            vim.keymap.set({"o","x"},"R",
+                end,
+                desc = "Remote Flash",
+            },
+            {
+                "R",
+                mode = { "o", "x" },
                 function()
                     require("flash").treesitter_search()
-                end
-            )
-        end,
+                end,
+                desc = "Flash Treesitter Search",
+            },
+            {
+                "<c-s>",
+                mode = { "c" },
+                function()
+                    require("flash").toggle()
+                end,
+                desc = "Toggle Flash Search",
+            },
+        },
+        config = true
     },
     {
         "kamykn/spelunker.vim",
+        event = "VeryLazy",
         config = function()
             vim.g.spelunker_check_type = 2
         end
     },
     {
         "ellisonleao/glow.nvim",
+        event = "VeryLazy",
         config = true,
     },
     {
@@ -74,41 +91,44 @@ return {
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
         },
-        config = function()
-            require("neo-tree").setup()
-            vim.keymap.set({"n", "v"},"<leader>e",[[<cmd>Neotree toggle<CR>]])
-        end
+        keys = {
+            { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Open the neo-tree", mode = { "n", "v" } }
+        },
+        config = true,
     },
     {
         "folke/which-key.nvim",
+        event = "VeryLazy",
         config = true,
     },
     {
         'echasnovski/mini.ai',
+        event = "VeryLazy",
         config = true,
     },
     {
         "echasnovski/mini.comment",
+        event = "VeryLazy",
         config = true,
     },
     {
         "s1n7ax/nvim-window-picker",
-        config = function()
-            require("window-picker").setup({
-                filter_rules = {
-                    include_current_win = true,
-                    bo = {
-                        filetype = { "fidget", "neo-tree" }
-                    }
+        opts = {
+            filter_rules = {
+                include_current_win = true,
+                bo = {
+                    filetype = { "fidget", "neo-tree" }
                 }
-            })
-            vim.keymap.set("n",
+            }
+        },
+        keys = {
+            {
                 "<c-w>p",
                 function()
                     local window_number = require('window-picker').pick_window()
                     if window_number then vim.api.nvim_set_current_win(window_number) end
-                end
-            )
-        end
+                end,
+            }
+        }
     },
 }
